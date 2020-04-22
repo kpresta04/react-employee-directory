@@ -187,7 +187,7 @@ const EnhancedTableToolbar = (props) => {
 					id="tableTitle"
 					component="div"
 				>
-					Nutrition
+					Employees
 				</Typography>
 			)}
 
