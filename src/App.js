@@ -13,7 +13,6 @@ import TableSortLabel from "@material-ui/core/TableSortLabel";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import Checkbox from "@material-ui/core/Checkbox";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -102,14 +101,7 @@ function EnhancedTableHead(props) {
 	return (
 		<TableHead>
 			<TableRow>
-				<TableCell padding="checkbox">
-					<Checkbox
-						indeterminate={numSelected > 0 && numSelected < rowCount}
-						checked={rowCount > 0 && numSelected === rowCount}
-						onChange={onSelectAllClick}
-						inputProps={{ "aria-label": "select all desserts" }}
-					/>
-				</TableCell>
+				<TableCell padding="checkbox"></TableCell>
 				{headCells.map((headCell) => (
 					<TableCell
 						key={headCell.id}
@@ -205,7 +197,12 @@ const EnhancedTableToolbar = (props) => {
 				</Tooltip>
 			) : (
 				<Tooltip title="Filter list">
-					<IconButton aria-label="filter list">
+					<IconButton
+						onClick={() => {
+							console.log("Hello");
+						}}
+						aria-label="filter list"
+					>
 						<FilterListIcon />
 					</IconButton>
 				</Tooltip>
@@ -330,19 +327,13 @@ export default function EnhancedTable() {
 									return (
 										<TableRow
 											hover
-											onClick={(event) => handleClick(event, row.name)}
 											role="checkbox"
 											aria-checked={isItemSelected}
 											tabIndex={-1}
 											key={row.name}
 											selected={isItemSelected}
 										>
-											<TableCell padding="checkbox">
-												<Checkbox
-													checked={isItemSelected}
-													inputProps={{ "aria-labelledby": labelId }}
-												/>
-											</TableCell>
+											<TableCell padding="checkbox"></TableCell>
 											<TableCell
 												component="th"
 												id={labelId}
