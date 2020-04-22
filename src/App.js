@@ -26,19 +26,19 @@ function createData(name, calories, fat, carbs, protein) {
 }
 
 const rows = [
-	createData("John Smith", 305, "Manager", 67, 4.3),
-	createData("Sally June", 452, 25.0, 51, 4.9),
-	createData("Peter Bob", 262, 16.0, 24, 6.0),
-	createData("Frodo Baggins", 159, 6.0, 24, 4.0),
-	createData("Tom Bombadil", 356, 16.0, 49, 3.9),
-	createData("Haley Jules", 408, 3.2, 87, 6.5),
-	createData("Alice Swift", 237, 9.0, 37, 4.3),
-	createData("Jelly Chris", 375, 0.0, 94, 0.0),
-	createData("Catherine Carter", 518, 26.0, 65, 7.0),
-	createData("Katie Anne", 392, 0.2, 98, 0.0),
-	createData("Lucy Marsh", 318, 0, 81, 2.0),
-	createData("Doug Douglas", 360, 19.0, 9, 37.0),
-	createData("Oreo Jones", 437, 18.0, 63, 4.0),
+	createData("John Smith", 305, "Management", "COO", 4.3),
+	createData("Sally June", 452, "Engineering", "Developer", 4.9),
+	createData("Peter Bob", 262, "Engineering", "Senior Developer", 6.0),
+	createData("Frodo Baggins", 159, "Engineering", "Developer", 4.0),
+	createData("Tom Bombadil", 356, "Engineering", "Senior Developer", 3.9),
+	createData("Haley Jules", 408, "Management", "Team Lead", 6.5),
+	createData("Alice Swift", 237, "Engineering", "Developer", 4.3),
+	createData("Jelly Chris", 375, "Interns", "Intern", 0.0),
+	createData("Catherine Carter", 518, "Management", "CTO", 7.0),
+	createData("Katie Anne", 392, "Interns", "Intern", 0.0),
+	createData("Lucy Marsh", 318, "Engineering", "Junior Developer", 2.0),
+	createData("Doug Douglas", 360, "Management", "CEO", 8),
+	createData("Oreo Jones", 437, "Engineering", "Developer", 4.0),
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -76,8 +76,13 @@ const headCells = [
 	},
 	{ id: "calories", numeric: true, disablePadding: false, label: "ID" },
 	{ id: "fat", numeric: false, disablePadding: false, label: "Department" },
-	{ id: "carbs", numeric: true, disablePadding: false, label: "Carbs (g)" },
-	{ id: "protein", numeric: true, disablePadding: false, label: "Protein (g)" },
+	{ id: "carbs", numeric: false, disablePadding: false, label: "Title" },
+	{
+		id: "protein",
+		numeric: true,
+		disablePadding: false,
+		label: "Years with Company",
+	},
 ];
 
 function EnhancedTableHead(props) {
