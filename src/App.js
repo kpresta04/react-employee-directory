@@ -26,19 +26,19 @@ function createData(name, calories, fat, carbs, protein) {
 }
 
 const rows = [
-	createData("Cupcake", 305, 3.7, 67, 4.3),
-	createData("Donut", 452, 25.0, 51, 4.9),
-	createData("Eclair", 262, 16.0, 24, 6.0),
-	createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-	createData("Gingerbread", 356, 16.0, 49, 3.9),
-	createData("Honeycomb", 408, 3.2, 87, 6.5),
-	createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-	createData("Jelly Bean", 375, 0.0, 94, 0.0),
-	createData("KitKat", 518, 26.0, 65, 7.0),
-	createData("Lollipop", 392, 0.2, 98, 0.0),
-	createData("Marshmallow", 318, 0, 81, 2.0),
-	createData("Nougat", 360, 19.0, 9, 37.0),
-	createData("Oreo", 437, 18.0, 63, 4.0),
+	createData("John Smith", 305, "Manager", 67, 4.3),
+	createData("Sally June", 452, 25.0, 51, 4.9),
+	createData("Peter Bob", 262, 16.0, 24, 6.0),
+	createData("Frodo Baggins", 159, 6.0, 24, 4.0),
+	createData("Tom Bombadil", 356, 16.0, 49, 3.9),
+	createData("Haley Jules", 408, 3.2, 87, 6.5),
+	createData("Alice Swift", 237, 9.0, 37, 4.3),
+	createData("Jelly Chris", 375, 0.0, 94, 0.0),
+	createData("Catherine Carter", 518, 26.0, 65, 7.0),
+	createData("Katie Anne", 392, 0.2, 98, 0.0),
+	createData("Lucy Marsh", 318, 0, 81, 2.0),
+	createData("Doug Douglas", 360, 19.0, 9, 37.0),
+	createData("Oreo Jones", 437, 18.0, 63, 4.0),
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -72,10 +72,10 @@ const headCells = [
 		id: "name",
 		numeric: false,
 		disablePadding: true,
-		label: "Dessert (100g serving)",
+		label: "Full name",
 	},
-	{ id: "calories", numeric: true, disablePadding: false, label: "Calories" },
-	{ id: "fat", numeric: true, disablePadding: false, label: "Fat (g)" },
+	{ id: "calories", numeric: true, disablePadding: false, label: "ID" },
+	{ id: "fat", numeric: false, disablePadding: false, label: "Department" },
 	{ id: "carbs", numeric: true, disablePadding: false, label: "Carbs (g)" },
 	{ id: "protein", numeric: true, disablePadding: false, label: "Protein (g)" },
 ];
@@ -108,7 +108,8 @@ function EnhancedTableHead(props) {
 				{headCells.map((headCell) => (
 					<TableCell
 						key={headCell.id}
-						align={headCell.numeric ? "right" : "left"}
+						// align={headCell.numeric ? "right" : "left"}
+						align={headCell.id === "name" ? "left" : "right"}
 						padding={headCell.disablePadding ? "none" : "default"}
 						sortDirection={orderBy === headCell.id ? order : false}
 					>
@@ -287,10 +288,6 @@ export default function EnhancedTable() {
 	const handleChangeRowsPerPage = (event) => {
 		setRowsPerPage(parseInt(event.target.value, 10));
 		setPage(0);
-	};
-
-	const handleChangeDense = (event) => {
-		setDense(event.target.checked);
 	};
 
 	const isSelected = (name) => selected.indexOf(name) !== -1;
