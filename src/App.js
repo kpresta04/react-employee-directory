@@ -13,32 +13,14 @@ import TableSortLabel from "@material-ui/core/TableSortLabel";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import IconButton from "@material-ui/core/IconButton";
-import Tooltip from "@material-ui/core/Tooltip";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
-import DeleteIcon from "@material-ui/icons/Delete";
-import FilterListIcon from "@material-ui/icons/FilterList";
+import SimpleMenu from "./components/SimpleMenu.component";
 
-function createData(name, calories, fat, carbs, protein) {
-	return { name, calories, fat, carbs, protein };
-}
+import { connect } from "react-redux";
 
-const rows = [
-	createData("John Smith", 305, "Management", "COO", 4.3),
-	createData("Sally June", 452, "Engineering", "Developer", 4.9),
-	createData("Peter Bob", 262, "Engineering", "Senior Developer", 6.0),
-	createData("Frodo Baggins", 159, "Engineering", "Developer", 4.0),
-	createData("Tom Bombadil", 356, "Engineering", "Senior Developer", 3.9),
-	createData("Haley Jules", 408, "Management", "Team Lead", 6.5),
-	createData("Alice Swift", 237, "Engineering", "Developer", 4.3),
-	createData("Jelly Chris", 375, "Interns", "Intern", 0.0),
-	createData("Catherine Carter", 518, "Management", "CTO", 7.0),
-	createData("Katie Anne", 392, "Interns", "Intern", 0.0),
-	createData("Lucy Marsh", 318, "Engineering", "Junior Developer", 2.0),
-	createData("Doug Douglas", 360, "Management", "CEO", 8),
-	createData("Oreo Jones", 437, "Engineering", "Developer", 4.0),
-];
+// function useRows() {
+// 	let [rows, setRows] = useState(initialRows);
+// 	return { rows };
+// }
 
 function descendingComparator(a, b, orderBy) {
 	if (b[orderBy] < a[orderBy]) {
@@ -189,24 +171,7 @@ const EnhancedTableToolbar = (props) => {
 				</Typography>
 			)}
 
-			{numSelected > 0 ? (
-				<Tooltip title="Delete">
-					<IconButton aria-label="delete">
-						<DeleteIcon />
-					</IconButton>
-				</Tooltip>
-			) : (
-				<Tooltip title="Filter list">
-					<IconButton
-						onClick={() => {
-							console.log("Hello");
-						}}
-						aria-label="filter list"
-					>
-						<FilterListIcon />
-					</IconButton>
-				</Tooltip>
-			)}
+			<SimpleMenu />
 		</Toolbar>
 	);
 };
@@ -239,7 +204,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function EnhancedTable() {
+function EnhancedTable(props) {
 	const classes = useStyles();
 	const [order, setOrder] = React.useState("asc");
 	const [orderBy, setOrderBy] = React.useState("calories");
@@ -256,31 +221,11 @@ export default function EnhancedTable() {
 
 	const handleSelectAllClick = (event) => {
 		if (event.target.checked) {
-			const newSelecteds = rows.map((n) => n.name);
+			const newSelecteds = props.rows.map((n) => n.name);
 			setSelected(newSelecteds);
 			return;
 		}
 		setSelected([]);
-	};
-
-	const handleClick = (event, name) => {
-		const selectedIndex = selected.indexOf(name);
-		let newSelected = [];
-
-		if (selectedIndex === -1) {
-			newSelected = newSelected.concat(selected, name);
-		} else if (selectedIndex === 0) {
-			newSelected = newSelected.concat(selected.slice(1));
-		} else if (selectedIndex === selected.length - 1) {
-			newSelected = newSelected.concat(selected.slice(0, -1));
-		} else if (selectedIndex > 0) {
-			newSelected = newSelected.concat(
-				selected.slice(0, selectedIndex),
-				selected.slice(selectedIndex + 1)
-			);
-		}
-
-		setSelected(newSelected);
 	};
 
 	const handleChangePage = (event, newPage) => {
@@ -295,7 +240,7 @@ export default function EnhancedTable() {
 	const isSelected = (name) => selected.indexOf(name) !== -1;
 
 	const emptyRows =
-		rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+		rowsPerPage - Math.min(rowsPerPage, props.rows.length - page * rowsPerPage);
 
 	return (
 		<div className={classes.root}>
@@ -315,10 +260,10 @@ export default function EnhancedTable() {
 							orderBy={orderBy}
 							onSelectAllClick={handleSelectAllClick}
 							onRequestSort={handleRequestSort}
-							rowCount={rows.length}
+							rowCount={props.rows.length}
 						/>
 						<TableBody>
-							{stableSort(rows, getComparator(order, orderBy))
+							{stableSort(props.rows, getComparator(order, orderBy))
 								.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 								.map((row, index) => {
 									const isItemSelected = isSelected(row.name);
@@ -360,7 +305,7 @@ export default function EnhancedTable() {
 				<TablePagination
 					rowsPerPageOptions={[5, 10, 25]}
 					component="div"
-					count={rows.length}
+					count={props.rows.length}
 					rowsPerPage={rowsPerPage}
 					page={page}
 					onChangePage={handleChangePage}
@@ -370,3 +315,11 @@ export default function EnhancedTable() {
 		</div>
 	);
 }
+
+const mapStateToProps = (state) => {
+	return {
+		rows: state.rows,
+	};
+};
+
+export default connect(mapStateToProps)(EnhancedTable);
