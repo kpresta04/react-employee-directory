@@ -5,6 +5,8 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Checkbox from "@material-ui/core/Checkbox";
+import { connect } from "react-redux";
+import { depFilter } from "../actions/filters";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -14,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function CheckboxList() {
+function CheckboxList(props) {
 	const classes = useStyles();
 	const [checked, setChecked] = React.useState([0, 1, 2]);
 	const names = ["Management", "Engineers", "Interns"];
@@ -30,6 +32,7 @@ export default function CheckboxList() {
 		}
 
 		setChecked(newChecked);
+		props.dispatch(depFilter(newChecked));
 	};
 
 	return (
@@ -61,3 +64,10 @@ export default function CheckboxList() {
 		</List>
 	);
 }
+const mapStateToProps = (state) => {
+	return {
+		rows: state.rows,
+	};
+};
+
+export default connect(mapStateToProps)(CheckboxList);

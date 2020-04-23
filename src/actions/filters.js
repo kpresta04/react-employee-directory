@@ -1,4 +1,4 @@
-export const textFilter = (text = "") => ({
-	type: "TEXT_FILTER",
-	text,
+export const depFilter = (depArray = []) => ({
+	type: "DEPARTMENT_FILTER",
+	depArray,
 });

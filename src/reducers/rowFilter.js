@@ -23,12 +23,24 @@ const engRows = [
 	createData("Oreo Jones", 437, "Engineering", "Developer", 4.0),
 ];
 
-const initialRows = [...managementRows, ...internRows, ...engRows];
+const rowDict = {
+	0: managementRows,
+	1: engRows,
+	2: internRows,
+};
+
+const initialRows = [...managementRows, ...engRows, ...internRows];
 
 const rowsReducer = (state = initialRows, action) => {
 	switch (action.type) {
-		case "TEXT_FILTER":
-			return state.filter((row) => !row.includes(action.text));
+		case "DEPARTMENT_FILTER":
+			let stateArray = [];
+			action.depArray.forEach((el) => {
+				stateArray = [...stateArray, ...rowDict[el]];
+			});
+			state = stateArray;
+
+			return state;
 
 		default:
 			return state;
