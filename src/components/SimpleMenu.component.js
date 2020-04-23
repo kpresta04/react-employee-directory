@@ -1,8 +1,8 @@
 import React from "react";
 import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
+import MenuList from "./MenuList.component";
 
 import FilterListIcon from "@material-ui/icons/FilterList";
 
@@ -37,9 +37,7 @@ export default function SimpleMenu() {
 				open={Boolean(anchorEl)}
 				onClose={handleClose}
 			>
-				<MenuItem onClick={handleClose}>Profile</MenuItem>
-				<MenuItem onClick={handleClose}>My account</MenuItem>
-				<MenuItem onClick={handleClose}>Logout</MenuItem>
+				<MenuList />
 			</Menu>
 		</div>
 	);
